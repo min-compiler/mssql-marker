@@ -1,0 +1,19 @@
+CASE inputexpression WHEN whenexpression THEN resultexpression ELSE elseresultexpression END 
+CASE inputexpression WHEN whenexpression THEN resultexpression END 
+CASE inputexpression WHEN whenexpression THEN resultexpression WHEN whenexpression THEN resultexpression ELSE elseresultexpression END 
+
+CASE WHEN booleanexpression THEN resultexpression ELSE elseresultexpression END
+CASE WHEN booleanexpression THEN resultexpression END
+CASE WHEN booleanexpression THEN resultexpression WHEN booleanexpression THEN resultexpression ELSE elseresultexpression END
+CASE WHEN booleanexpression THEN resultexpression else expression end
+CASE WHEN booleanexpression then resultexpression WHEN booleanexpression THEN resultexpression else elseresultexpression END
+
+CASE CASE inputexpression WHEN whenexpression THEN resultexpression WHEN whenexpression THEN resultexpression ELSE elseresultexpression END
+CASE WHEN booleanexpression ELSE resultexpression ELSE elseresultexpression END
+CASE inputexpression WHEN WHEN whenexpression THEN resultexpression WHEN whenexpression THEN resultexpression ELSE elseresultexpression END
+CASE inputexpression WHEN whenexpression THEN resultexpression WHEN whenexpression THEN resultexpression ELSE elseresultexpression END END
+
+case when a then b end
+c4se a when b then c end
+case when a then b end
+case a when b end
