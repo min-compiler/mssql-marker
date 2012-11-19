@@ -2,9 +2,11 @@ LINE_COMMENT [ ]*--.*
 
 %x COMMENT
 %%
-{LINE_COMMENT} { 
+
+{LINE_COMMENT}
+{ 
 	/* skip */
-	}
+}
 	
 "/*" { BEGIN COMMENT; }
 
