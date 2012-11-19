@@ -1,6 +1,6 @@
 LINE_COMMENT [ ]*--.*
 
-GOTO GOTO[ ][^ ;]+
+GOTO (GOTO|goto)[ ][^ ;]+
 GOTO_LABEL [ ]*[^:\n]+:
 
 %x COMMENT

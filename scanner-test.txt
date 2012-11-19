@@ -9,7 +9,7 @@ BEGIN
 END
 Branch_One:
     SELECT 'Jumping To Branch One.'
-    GOTO Branch_Three; --This will prevent Branch_Two from executing.
+    goto Branch_Three; --This will prevent Branch_Two from executing.
 Branch_Two:
     SELECT 'Jumping To Branch Two.'
 Branch_Three:
