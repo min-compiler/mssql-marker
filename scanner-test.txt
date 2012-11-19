@@ -1,3 +1,5 @@
+
+
 DECLARE @Counter int;
 SET @Counter = 1;
 WHILE @Counter < 10
@@ -22,3 +24,7 @@ abc -- hallowelt
 Hallowelt 123!
 /*
 */
+
+WAITFOR DELAY '02:00';
+WAITFOR DELAY @DelayLength
+WAITFOR TIME '22:20';
