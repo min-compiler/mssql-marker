@@ -1,18 +1,27 @@
-LINE_COMMENT [ ]*--.*
+LINE_COMMENT 		[ ]*--.*
+
+GOTO 				(GOTO|goto)[ ][^ ;]+
+GOTO_LABEL 			^[ ]*[^:\n ]+:
+
+TIME_LITERAL		'[0-9]{1,2}:[0-9]{1,2}'
+WAIT_FOR 			^[ ]*(WAITFOR|waitfor)[ ]({WAIT_FOR_DELAY}|{WAIT_FOR_TIME})
+WAIT_FOR_DELAY		(DELAY|delay)[ ](@[^ \n;]+|{TIME_LITERAL})
+WAIT_FOR_TIME		(TIME|time)[ ]{TIME_LITERAL}
 
 %x COMMENT
 %%
 
-{LINE_COMMENT}
-{ 
-	/* skip */
-}
-	
-"/*" { BEGIN COMMENT; }
+{GOTO}			{ printf("<GOTO> %s\n", yytext); }
+{GOTO_LABEL}	{ printf("<GOTO LABEL> %s\n", yytext); }
 
+{WAIT_FOR}		{ printf("<WAITFOR> %s\n", yytext); }
+
+{LINE_COMMENT} 	{ /* skip */ }
+"/*" 			{ BEGIN COMMENT; }
 <COMMENT>(.|\n) { /* skip */ }
+<COMMENT>"*/" 	{ BEGIN INITIAL; }
 
-<COMMENT>"*/" { BEGIN INITIAL; }
+.				{ /* skip */ }
 %%
 
 int main(int argc, char* argv[]) {
