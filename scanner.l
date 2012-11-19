@@ -1,16 +1,20 @@
 LINE_COMMENT [ ]*--.*
 
+GOTO GOTO[ ][^ ;]+
+GOTO_LABEL [ ]*[^:\n]+:
+
 %x COMMENT
 %%
-{LINE_COMMENT} { 
-	/* skip */
-	}
-	
-"/*" { BEGIN COMMENT; }
 
+{GOTO}			{ printf("<GOTO> %s\n", yytext); }
+{GOTO_LABEL}	{ printf("<GOTO LABEL> %s\n", yytext); }
+
+{LINE_COMMENT} 	{ /* skip */ }
+"/*" 			{ BEGIN COMMENT; }
 <COMMENT>(.|\n) { /* skip */ }
+<COMMENT>"*/" 	{ BEGIN INITIAL; }
 
-<COMMENT>"*/" { BEGIN INITIAL; }
+.				{ /* skip */ }
 %%
 
 int main(int argc, char* argv[]) {
