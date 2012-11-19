@@ -1,7 +1,7 @@
-LINE_COMMENT [ ]*--.*
+LINE_COMMENT 		[ ]*--.*
 
-GOTO (GOTO|goto)[ ][^ ;]+
-GOTO_LABEL ^[ ]*[^:\n ]+:
+GOTO 				(GOTO|goto)[ ][^ ;]+
+GOTO_LABEL 			^[ ]*[^:\n ]+:
 
 TIME_LITERAL		'[0-9]{1,2}:[0-9]{1,2}'
 WAIT_FOR 			^[ ]*(WAITFOR|waitfor)[ ]({WAIT_FOR_DELAY}|{WAIT_FOR_TIME})
