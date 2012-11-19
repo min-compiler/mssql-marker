@@ -7,7 +7,7 @@ scanner: flex
 	gcc case_scanner.c -lfl -o case_scanner
 
 test-scanner: scanner
-	./scanner scanner-test.txt
+	./scanner scanner-test.txt > scanner_result.txt
 	./case_scanner example.txt > result.txt
 
 clean:
