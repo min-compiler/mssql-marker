@@ -19,8 +19,8 @@ END                 (end|END)[;\n]+
 
 {WAIT_FOR}		{ printf("<WAITFOR> %s\n", yytext); }
 
-{BEGIN}         { printf("<BEGIN> %s\n", yytext); }
-{END}           { printf("<END> %s\n", yytext); }
+{BEGIN}         { printf("<BEGIN>: %s\n", yytext); }
+{END}           { printf("<END>: %s\n", yytext); }
 
 {LINE_COMMENT} 	{ /* skip */ }
 "/*" 			{ BEGIN COMMENT; }
