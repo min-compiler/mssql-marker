@@ -1,4 +1,11 @@
-
+BEGIN TRY
+    EXECUTE usp_ExampleProc
+END TRY
+BEGIN CATCH
+    SELECT 
+        ERROR_NUMBER() as ErrorNumber,
+        ERROR_MESSAGE() as ErrorMessage;
+END CATCH;
 
 DECLARE @Counter int;
 SET @Counter = 1;
