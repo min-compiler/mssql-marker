@@ -21,8 +21,21 @@ RETURN_EXP      {RETURN_REGEX}({INTEGER}|{EXPRESSION})
 WHILE           (while|WHILE)[ ]
 WHILE_EXP       {WHILE}{EXPRESSION}
 
+TRY_START	{BEGIN}(TRY|try)
+TRY_END		(END[ \n]+TRY)|(end[ \n]+try) 
+CATCH_START     {BEGIN}(CATCH|catch)
+CATCH_END       ((END[ \n]+CATCH)|(end[ \n]+catch))[ ]*[;]
+
 %x COMMENT
 %%
+
+{TRY_START} 	{printf("<TRY_START>%s\n",yytext);}
+
+{TRY_END} 	{printf("<TRY_END>%s\n",yytext);}
+
+{CATCH_START} 	{printf("<CATCH_START>%s\n",yytext);}
+
+{CATCH_END} 	{printf("<CATCH_END>%s\n",yytext);}
 
 {WHILE_EXP}     { printf("<WHILE> '%s'", yytext); }
 
