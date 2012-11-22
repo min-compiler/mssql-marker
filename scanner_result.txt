@@ -1,28 +1,21 @@
 opening scanner-test.txt as test data ...
 
+BEGIN TRY EXECUTE 
+END TRY BEGIN CATCH 
+BRACE_OPEN BRACE_CLOSE 
+BRACE_OPEN BRACE_CLOSE 
+END 
 
+DECLARE 
 
+WHILE 
+BEGIN 
 
+IF GOTO 
+IF GOTO 
+END 
 
-<BEGIN> BEGIN 
-    
-
-
-<GOTO> GOTO Branch_One
-
-<GOTO> GOTO Branch_Two
-
-<END> END
-
-<GOTO LABEL> Branch_One:
-
-
-<GOTO> goto Branch_Three
-
-<GOTO LABEL> Branch_Two:
-
-
-<GOTO LABEL> Branch_Three:
+GOTO 
 
 
 
@@ -31,9 +24,24 @@ opening scanner-test.txt as test data ...
 
 
 
-<WAITFOR> WAITFOR DELAY '02:00'
 
-<WAITFOR> WAITFOR DELAY @DelayLength
 
-<WAITFOR> WAITFOR TIME '22:20'
+WAITFOR DELAY 
+WAITFOR DELAY 
+WAITFOR TIME 
 
+RETURN RETURN 
+RETURN 
+RETURN 
+
+WHILE 
+WHILE WHILE 
+
+CASE WHEN 
+THEN 
+ELSE 
+END CASE 
+WHEN THEN 
+WHEN THEN 
+ELSE 
+END 

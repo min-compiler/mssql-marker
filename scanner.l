@@ -1,68 +1,84 @@
-LINE_COMMENT    [ ]*--.*
+LINE_COMMENT        [ ]*--.*
 
-GOTO            (GOTO|goto)[ ][^ ;]+
-GOTO_LABEL      ^[ ]*[^:\n ]+:
+KEYWORD_START       ([ ]*)|^
+KEYWORD_END         [ \n]+
+CASE	            {KEYWORD_START}(CASE|case){KEYWORD_END}
+WHEN	            {KEYWORD_START}(WHEN|when){KEYWORD_END}
+THEN	            {KEYWORD_START}(THEN|then){KEYWORD_END}
+ELSE	            {KEYWORD_START}(ELSE|else){KEYWORD_END}
+END	                {KEYWORD_START}(END|end){KEYWORD_END}
+IF	                {KEYWORD_START}(IF|if){KEYWORD_END}
+BEGIN   	        {KEYWORD_START}(BEGIN|begin){KEYWORD_END}
+TRY	                {KEYWORD_START}(TRY|try){KEYWORD_END}
+CATCH	            {KEYWORD_START}(CATCH|catch){KEYWORD_END}
+GOTO    	        {KEYWORD_START}(GOTO|goto){KEYWORD_END}
+RETURN    	        {KEYWORD_START}(RETURN|return){KEYWORD_END}
+WHILE    	        {KEYWORD_START}(WHILE|while){KEYWORD_END}
 
-TIME_LITERAL    '[0-9]{1,2}:[0-9]{1,2}'
-WAIT_FOR        ^[ ]*(WAITFOR|waitfor)[ ]({WAIT_FOR_DELAY}|{WAIT_FOR_TIME})
-WAIT_FOR_DELAY  (DELAY|delay)[ ](@[^ \n;]+|{TIME_LITERAL})
-WAIT_FOR_TIME   (TIME|time)[ ]{TIME_LITERAL}
+DELAY               {KEYWORD_START}(DELAY|delay){KEYWORD_END}
+TIME                {KEYWORD_START}(TIME|time){KEYWORD_END}
+WAITFOR             {KEYWORD_START}(WAITFOR|waitfor){KEYWORD_END}
 
-BEGIN           (begin|BEGIN)[ \n]+
-END             (end|END)[;\n]+
+BREAK               {KEYWORD_START}(BREAK|break){KEYWORD_END}
+CONTINUE            {KEYWORD_START}(CONTINUE|continue){KEYWORD_END}
+THROW               {KEYWORD_START}(THROW|throw){KEYWORD_END}
+DECLARE             {KEYWORD_START}(DECLARE|declare){KEYWORD_END}
+EXECUTE             {KEYWORD_START}(EXECUTE|execute){KEYWORD_END}
+PRINT               {KEYWORD_START}(PRINT|print){KEYWORD_END}
+RAISEERROR          {KEYWORD_START}(RAISEERROR|raiseerror){KEYWORD_END}
 
-ALPHA		[a-zA-Z]
-NUM		[0-9]
-EXPRESSION	@{ALPHA}({ALPHA}|{NUM})*
-INTEGER         {NUM}+
-RETURN_REGEX    (RETURN|return)[ ]?
-RETURN_EXP      {RETURN_REGEX}({INTEGER}|{EXPRESSION})
+BRACE_OPEN          [(]
+BRACE_CLOSE         [)]
 
-WHILE           (while|WHILE)[ ]
-WHILE_EXP       {WHILE}{EXPRESSION}
-
-TRY_START	{BEGIN}(TRY|try)
-TRY_END		(END[ \n]+TRY)|(end[ \n]+try) 
-CATCH_START     {BEGIN}(CATCH|catch)
-CATCH_END       ((END[ \n]+CATCH)|(end[ \n]+catch))[ ]*[;]
 
 %x COMMENT
 %%
 
-{TRY_START} 	{printf("<TRY_START>%s\n",yytext);}
+{LINE_COMMENT}      { /* skip */ }
+"/*"                { BEGIN COMMENT; }
+<COMMENT>(.|\n)     { /* skip */ }
+<COMMENT>"*/"       { BEGIN INITIAL; }
 
-{TRY_END} 	{printf("<TRY_END>%s\n",yytext);}
+{CASE}              { printf("CASE "); }  	            
+{WHEN}	            { printf("WHEN "); } 
+{THEN}	            { printf("THEN "); } 
+{ELSE}	            { printf("ELSE "); } 
+{END}	            { printf("END "); } 
+{IF}	            { printf("IF "); } 
+{BEGIN}   	        { printf("BEGIN "); } 
+{TRY}	            { printf("TRY "); } 
+{CATCH}	            { printf("CATCH "); } 
+{GOTO}    	        { printf("GOTO "); } 
+{RETURN}    	    { printf("RETURN "); } 
+{WHILE}    	        { printf("WHILE "); } 
+{DELAY}             { printf("DELAY "); } 
+{TIME}              { printf("TIME "); } 
+{WAITFOR}           { printf("WAITFOR "); } 
+{BREAK}             { printf("BREAK "); } 
+{CONTINUE}          { printf("CONTINUE "); } 
+{THROW}             { printf("THROW "); } 
+{DECLARE}           { printf("DECLARE "); } 
+{EXECUTE}           { printf("EXECUTE "); } 
+{PRINT}             { printf("PRINT "); } 
+{RAISEERROR}        { printf("RAISEERROR "); } 
+{BRACE_OPEN}        { printf("BRACE_OPEN "); } 
+{BRACE_CLOSE}       { printf("BRACE_CLOSE "); } 
 
-{CATCH_START} 	{printf("<CATCH_START>%s\n",yytext);}
+[0-9a-zA-Z]+        { /* skip */ }
+.                   { /* skip */ }
 
-{CATCH_END} 	{printf("<CATCH_END>%s\n",yytext);}
-
-{WHILE_EXP}     { printf("<WHILE> '%s'", yytext); }
-
-{RETURN_EXP}    { printf("<RETURN> '%s'", yytext); }
-
-{GOTO}          { printf("<GOTO> %s\n", yytext); }
-{GOTO_LABEL}    { printf("<GOTO LABEL> %s\n", yytext); }
-
-{WAIT_FOR}      { printf("<WAITFOR> %s\n", yytext); }
-
-{BEGIN}         { printf("<BEGIN> %s\n", yytext); }
-{END}           { printf("<END> %s\n", yytext); }
-
-{LINE_COMMENT}  { /* skip */ }
-"/*"            { BEGIN COMMENT; }
-<COMMENT>(.|\n) { /* skip */ }
-<COMMENT>"*/"   { BEGIN INITIAL; }
-
-.               { /* skip */ }
 %%
 
-int main(int argc, char* argv[]) {
-	if (argc > 1) {
+int main(int argc, char* argv[])
+{
+	if (argc > 1)
+    {
 		char* filename = argv[1];
 		printf("opening %s as test data ...\n", filename);
 		yyin = fopen(filename, "r");
-	} else {
+	}
+    else
+    {
 		yyin = stdin;
 	}
 

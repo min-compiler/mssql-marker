@@ -1,3 +1,4 @@
+jfdkfjalBEGIN
 BEGIN TRY
     EXECUTE usp_ExampleProc
 END TRY
@@ -44,3 +45,16 @@ return 12test
 WHILE @SOMETHING
 WHILE
 while @true
+
+CASE
+    WHEN booleanexpression
+    THEN resultexpression
+    ELSE elseresultexpression
+END
+
+CASE inputexpression
+    WHEN whenexpression THEN resultexpression
+    WHEN whenexpression THEN resultexpression
+    ELSE elseresultexpression
+END 
+
