@@ -28,3 +28,12 @@ Hallowelt 123!
 WAITFOR DELAY '02:00';
 WAITFOR DELAY @DelayLength
 WAITFOR TIME '22:20';
+
+RETURN
+RETURN 0
+return @test123
+return 12test
+
+WHILE @SOMETHING
+WHILE
+while @true
