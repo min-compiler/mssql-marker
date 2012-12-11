@@ -1,3 +1,7 @@
 scanner
 case_scanner
 *.c
+*.*~
+*.swp
+result.txt
+scanner_result.txt
