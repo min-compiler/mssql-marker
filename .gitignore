@@ -5,3 +5,4 @@ case_scanner
 *.swp
 result.txt
 scanner_result.txt
+*.tab.*

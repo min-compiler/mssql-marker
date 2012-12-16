@@ -1,19 +1,24 @@
+%{
+#include "parser.tab.h"
+#include <ctype.h>
+%}
+
 LINE_COMMENT        [ ]*--.*
 
 KEYWORD_START       ([ ]*)|^
 KEYWORD_END         [ \n]+
-CASE	            {KEYWORD_START}(CASE|case){KEYWORD_END}
-WHEN	            {KEYWORD_START}(WHEN|when){KEYWORD_END}
-THEN	            {KEYWORD_START}(THEN|then){KEYWORD_END}
-ELSE	            {KEYWORD_START}(ELSE|else){KEYWORD_END}
-END	                {KEYWORD_START}(END|end){KEYWORD_END}
-IF	                {KEYWORD_START}(IF|if){KEYWORD_END}
-BEGIN   	        {KEYWORD_START}(BEGIN|begin){KEYWORD_END}
-TRY	                {KEYWORD_START}(TRY|try){KEYWORD_END}
-CATCH	            {KEYWORD_START}(CATCH|catch){KEYWORD_END}
-GOTO    	        {KEYWORD_START}(GOTO|goto){KEYWORD_END}
-RETURN    	        {KEYWORD_START}(RETURN|return){KEYWORD_END}
-WHILE    	        {KEYWORD_START}(WHILE|while){KEYWORD_END}
+CASE                {KEYWORD_START}(CASE|case){KEYWORD_END}
+WHEN                {KEYWORD_START}(WHEN|when){KEYWORD_END}
+THEN                {KEYWORD_START}(THEN|then){KEYWORD_END}
+ELSE                {KEYWORD_START}(ELSE|else){KEYWORD_END}
+END                 {KEYWORD_START}(END|end){KEYWORD_END}
+IF                  {KEYWORD_START}(IF|if){KEYWORD_END}
+BEGIN               {KEYWORD_START}(BEGIN|begin){KEYWORD_END}
+TRY                 {KEYWORD_START}(TRY|try){KEYWORD_END}
+CATCH               {KEYWORD_START}(CATCH|catch){KEYWORD_END}
+GOTO                {KEYWORD_START}(GOTO|goto){KEYWORD_END}
+RETURN              {KEYWORD_START}(RETURN|return){KEYWORD_END}
+WHILE               {KEYWORD_START}(WHILE|while){KEYWORD_END}
 
 DELAY               {KEYWORD_START}(DELAY|delay){KEYWORD_END}
 TIME                {KEYWORD_START}(TIME|time){KEYWORD_END}
@@ -39,48 +44,51 @@ BRACE_CLOSE         [)]
 <COMMENT>(.|\n)     { /* skip */ }
 <COMMENT>"*/"       { BEGIN INITIAL; }
 
-{CASE}              { printf("CASE "); }  	            
-{WHEN}	            { printf("WHEN "); } 
-{THEN}	            { printf("THEN "); } 
-{ELSE}	            { printf("ELSE "); } 
-{END}	            { printf("END "); } 
-{IF}	            { printf("IF "); } 
-{BEGIN}   	        { printf("BEGIN "); } 
-{TRY}	            { printf("TRY "); } 
-{CATCH}	            { printf("CATCH "); } 
-{GOTO}    	        { printf("GOTO "); } 
-{RETURN}    	    { printf("RETURN "); } 
-{WHILE}    	        { printf("WHILE "); } 
-{DELAY}             { printf("DELAY "); } 
-{TIME}              { printf("TIME "); } 
-{WAITFOR}           { printf("WAITFOR "); } 
-{BREAK}             { printf("BREAK "); } 
-{CONTINUE}          { printf("CONTINUE "); } 
-{THROW}             { printf("THROW "); } 
-{DECLARE}           { printf("DECLARE "); } 
-{EXECUTE}           { printf("EXECUTE "); } 
-{PRINT}             { printf("PRINT "); } 
-{RAISEERROR}        { printf("RAISEERROR "); } 
-{BRACE_OPEN}        { printf("BRACE_OPEN "); } 
-{BRACE_CLOSE}       { printf("BRACE_CLOSE "); } 
+{CASE}              { return (CASE); }                
+{WHEN}              { return (WHEN); } 
+{THEN}              { return (THEN); } 
+{ELSE}              { return (ELSE); } 
+{END}               { return (END); } 
+{IF}                { return (IF); } 
+{BEGIN}             { return (BEGIN); } 
+{TRY}               { return (TRY); } 
+{CATCH}             { return (CATCH); } 
+{GOTO}              { return (GOTO); } 
+{RETURN}            { return (RETURN); } 
+{WHILE}             { return (WHILE); } 
+{DELAY}             { return (DELAY); } 
+{TIME}              { return (TIME); } 
+{WAITFOR}           { return (WAITFOR); } 
+{BREAK}             { return (BREAK); } 
+{CONTINUE}          { return (CONTINUE); } 
+{THROW}             { return (THROW); } 
+{DECLARE}           { return (DECLARE); } 
+{EXECUTE}           { return (EXECUTE); } 
+{PRINT}             { return (PRINT); } 
+{RAISEERROR}        { return (RAISEERROR); } 
+{BRACE_OPEN}        { return (BRACE_OPEN); } 
+{BRACE_CLOSE}       { return (BRACE_CLOSE); } 
 
-[0-9a-zA-Z]+        { /* skip */ }
-.                   { /* skip */ }
+#[0-9a-zA-Z]+        { /*ignore*/ }
+.                   { return (CONTENT); }
 
 %%
+yywrap(){}
 
+/*
 int main(int argc, char* argv[])
 {
-	if (argc > 1)
+    if (argc > 1)
     {
-		char* filename = argv[1];
-		printf("opening %s as test data ...\n", filename);
-		yyin = fopen(filename, "r");
-	}
+        char* filename = argv[1];
+        printf("opening %s as test data ...\n", filename);
+        yyin = fopen(filename, "r");
+    }
     else
     {
-		yyin = stdin;
-	}
+        yyin = stdin;
+    }
 
-	yylex();
+    yylex();
 }
+*/
