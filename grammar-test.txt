@@ -1,5 +1,14 @@
-WHILE @SOMETHING 
-WHILE @SOMETHING
+CASE 
+WHEN abc THEN abc
+WHEN abc THEN abc  
+END
+
+
+CASE inputexpression
+    WHEN whenexpression THEN resultexpression
+    WHEN whenexpression THEN resultexpression
+    ELSE elseresultexpression
+END 
 
 CASE
     WHEN booleanexpression
@@ -7,8 +16,10 @@ CASE
     ELSE elseresultexpression
 END
 
-CASE inputexpression
-    WHEN whenexpression THEN resultexpression
-    WHEN whenexpression THEN resultexpression
-    ELSE elseresultexpression
-END 
+CASE ProductLine
+     WHEN 'R' THEN 'Road'
+     WHEN 'M' THEN 'Mountain'
+     WHEN 'T' THEN 'Touring'
+     WHEN 'S' THEN 'Other sale items'
+     ELSE 'Not for sale'
+END

@@ -1,5 +1,5 @@
 flex: clean
-	bison -v -d parser.y
+	bison -v -t -d parser.y
 	flex -o scanner.c scanner.l 
 
 scanner: flex
