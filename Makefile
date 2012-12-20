@@ -1,11 +1,11 @@
 flex: clean
-	bison -d parser.y
+	bison -v -d parser.y
 	flex -o scanner.c scanner.l 
 
 scanner: flex
 	gcc -o parser parser.tab.c scanner.c
 
-test-scanner: scanner
+scanner-test: scanner
 	./scanner scanner-test.txt
 
 clean:
@@ -15,3 +15,6 @@ clean:
 
 parser: scanner
 	gcc -o parser parser.tab.c scanner.c
+
+parser-test: parser
+	cat grammar-test.txt | ./parser

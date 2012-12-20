@@ -1,3 +1,5 @@
+case test
+
 jfdkfjalBEGIN
 BEGIN TRY
     EXECUTE usp_ExampleProc
