@@ -7,6 +7,7 @@ LINE_COMMENT        [ ]*--.*
 
 KEYWORD_START       ([ ]*)|^
 KEYWORD_END         [ \n]+
+LABEL               {KEYWORD_START}([0-9a-zA-Z_]+):{KEYWORD_END}
 CASE                {KEYWORD_START}(CASE|case){KEYWORD_END}
 WHEN                {KEYWORD_START}(WHEN|when){KEYWORD_END}
 THEN                {KEYWORD_START}(THEN|then){KEYWORD_END}
@@ -44,6 +45,7 @@ BRACE_CLOSE         [)]
 <COMMENT>(.|\n)     { /* skip */ }
 <COMMENT>"*/"       { BEGIN INITIAL; }
 
+{LABEL}             { return (OP_LABEL); }
 {CASE}              { return (OP_CASE); }                
 {WHEN}              { return (OP_WHEN); } 
 {THEN}              { return (OP_THEN); } 
