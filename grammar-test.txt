@@ -23,3 +23,13 @@ CASE ProductLine
      WHEN 'S' THEN 'Other sale items'
      ELSE 'Not for sale'
 END
+
+WHILE @Counter < 10
+
+Branch_One:
+    SELECT 'Jumping To Branch One.'
+    GOTO Branch_Three; --This will prevent Branch_Two from executing.
+Branch_Two:
+    SELECT 'Jumping To Branch Two.'
+Branch_Three:
+    SELECT 'Jumping To Branch Three.'
