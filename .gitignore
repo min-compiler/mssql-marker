@@ -6,3 +6,5 @@ case_scanner
 result.txt
 scanner_result.txt
 *.tab.*
+parser
+parser.output
