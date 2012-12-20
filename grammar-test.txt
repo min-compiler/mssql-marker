@@ -1,2 +1,14 @@
 WHILE @SOMETHING 
-WHILE @SOMETHING 
+WHILE @SOMETHING
+
+CASE
+    WHEN booleanexpression
+    THEN resultexpression
+    ELSE elseresultexpression
+END
+
+CASE inputexpression
+    WHEN whenexpression THEN resultexpression
+    WHEN whenexpression THEN resultexpression
+    ELSE elseresultexpression
+END 
