@@ -37,6 +37,7 @@ _content_word:  CONTENT _content_word
 _operation:     _while _statement
                 | _case
                 | _label
+                | _catch
                 ;
                 
 _while:         OP_WHILE                { logMessage(yytext); }
@@ -57,6 +58,9 @@ _condition_list:    _condition_list _condition
 _condition:     OP_WHEN _statement OP_THEN _statement;  
 
 _condition_else:     OP_ELSE _statement;  
+
+_catch:         OP_CATCH _statement OP_END OP_CATCH             { logMessage("catch"); }
+                ;
                 
 %%
 

@@ -24,6 +24,10 @@ CASE ProductLine
      ELSE 'Not for sale'
 END
 
+CATCH
+ SELECT ERROR_NUMBER as ErrorNumber, ERROR_MESSAGE as ErrorMessage; 
+END CATCH
+
 WHILE @Counter < 10
 
 Branch_One:
