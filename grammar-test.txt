@@ -1,12 +1,15 @@
+
+(bla) 
+()
 CASE 
-WHEN abc THEN abc
+WHEN abc abc THEN abc
 WHEN abc THEN abc  
 END
 
 
 CASE inputexpression
-    WHEN whenexpression THEN resultexpression
-    WHEN whenexpression THEN resultexpression
+    WHEN whenexpression() THEN resultexpression
+    WHEN whenexpression(bla) THEN resultexpression
     ELSE elseresultexpression
 END 
 
@@ -25,7 +28,7 @@ CASE ProductLine
 END
 
 CATCH
- SELECT ERROR_NUMBER as ErrorNumber, ERROR_MESSAGE as ErrorMessage; 
+ SELECT ERROR_NUMBER() as ErrorNumber, ERROR_MESSAGE as ErrorMessage; 
 END CATCH
 
 WHILE @Counter < 10
