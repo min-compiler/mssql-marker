@@ -40,3 +40,18 @@ Branch_Two:
     SELECT 'Jumping To Branch Two.'
 Branch_Three:
     SELECT 'Jumping To Branch Three.'
+
+
+IF (a)
+BEGIN
+dosomething
+somewhere
+END
+ELSE
+BEGIN
+somethingother
+anotherstmt
+END
+
+WHILE @Counter < 10
+
