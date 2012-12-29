@@ -6,6 +6,7 @@ parser.y:
 
 #include<stdio.h>
 #include<math.h>
+int zeile=1;
 
 extern char *yytext;
 double symbole[26];
@@ -99,7 +100,7 @@ logMessage(const char* content) {
 }
 
 yyerror(){
-    fprintf(stderr,"Syntaxfehler!\n");
+    fprintf(stderr,"Syntaxfehler! In Zeile: %d .\n", zeile);
 }
 main(){
     // set me to 1 to get nice debug messages!!!
