@@ -1,12 +1,14 @@
 %{
 #include "parser.tab.h"
 #include <ctype.h>
+extern int zeile;
 %}
 
 LINE_COMMENT        [ ]*--.*
 
 KEYWORD_START       ([ ]*)|^
 KEYWORD_END         [ \n]+
+NEWLINE    			[\n]
 
 LABEL               {KEYWORD_START}([0-9a-zA-Z_]+):{KEYWORD_END}
 CASE                {KEYWORD_START}(CASE|case){KEYWORD_END}
@@ -22,14 +24,20 @@ WHILE               {KEYWORD_START}(WHILE|while){KEYWORD_END}
 BRACE_OPEN          [(]
 BRACE_CLOSE         [)]
 
-%x COMMENT
+%x COMMENT KEYWORD_END
 %%
 
 {LINE_COMMENT}      { /* skip */ }
 "/*"                { BEGIN COMMENT; }
-<COMMENT>(.|\n)     { /* skip */ }
+<COMMENT>(.)     { /* skip */ }
+<COMMENT>(\n)        { zeile++; }
 <COMMENT>"*/"       { BEGIN INITIAL; }
 
+"{LABEL}|{CASE}|{WHEN}|{THEN}|{ELSE}|{END}|{IF}|{BEGIN}|{CATCH}|{WHILE}" 			{ BEGIN KEYWORD_END; }
+<KEYWORD_END>[ ]+		{ BEGIN INITIAL; }
+<KEYWORD_END>[\n]+		{ zeile++; BEGIN INITIAL; }
+
+{NEWLINE}    		{ zeile++; }
 {LABEL}             { return (OP_LABEL); }
 {CASE}              { return (OP_CASE); }                
 {WHEN}              { return (OP_WHEN); } 
