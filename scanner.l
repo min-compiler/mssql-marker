@@ -7,7 +7,7 @@ extern int zeile;
 LINE_COMMENT        [ ]*--.*
 
 KEYWORD_START       ([ ]*)|^
-KEYWORD_END         [ \n]+
+KEYWORD_END         [ \n]
 NEWLINE    			[\n]
 
 LABEL               {KEYWORD_START}([0-9a-zA-Z_]+):{KEYWORD_END}
@@ -35,7 +35,7 @@ BRACE_CLOSE         [)]
 
 "{LABEL}|{CASE}|{WHEN}|{THEN}|{ELSE}|{END}|{IF}|{BEGIN}|{CATCH}|{WHILE}" 			{ BEGIN KEYWORD_END; }
 <KEYWORD_END>[ ]+		{ BEGIN INITIAL; }
-<KEYWORD_END>[\n]+		{ zeile++; BEGIN INITIAL; }
+<KEYWORD_END>[\n]		{ zeile++; BEGIN INITIAL; }
 
 {NEWLINE}    		{ zeile++; }
 {LABEL}             { return (OP_LABEL); }
