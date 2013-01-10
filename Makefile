@@ -3,7 +3,7 @@ flex: clean
 	flex -o scanner.c scanner.l 
 
 scanner: flex
-	gcc -o parser parser.tab.c scanner.c
+	gcc -o scanner parser.tab.c scanner.c
 
 scanner-test: scanner
 	./scanner scanner-test.txt
