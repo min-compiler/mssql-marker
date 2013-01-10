@@ -3,7 +3,6 @@ WHEN abc abc THEN abc
 WHEN abc THEN abc  
 END
 
-
 CASE inputexpression
     WHEN whenexpression THEN resultexpression
     WHEN whenexpression THEN resultexpression
@@ -47,8 +46,6 @@ END
 ELSE
 BEGIN
 somethingother
-anotherstmt
+anotherstmt(TEST)
 END
-
-WHILE @Counter < 10
 

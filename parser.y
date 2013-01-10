@@ -36,7 +36,9 @@ _statement:     _content_word                   { logMessage("contentWord"); }
 _content_word:  CONTENT _content_word
                 | CONTENT                                                       { logMessage("content"); logMessage(yytext); }     
                 | CONTENT BRACE_OPEN BRACE_CLOSE _content_word
-                | CONTENT BRACE_OPEN _content_word BRACE_CLOSE _content_word
+                | CONTENT BRACE_OPEN _content_word BRACE_CLOSE _content_word 
+                | CONTENT BRACE_OPEN BRACE_CLOSE  
+                | CONTENT BRACE_OPEN _content_word BRACE_CLOSE             
                 ;
 
 _braces:        BRACE_OPEN BRACE_CLOSE                  
