@@ -29,24 +29,25 @@ _statement_list: _statement_list _statement
                 | _statement
                 ;
                 
-_statement:     _content_word           { logMessage("contentWord"); }
-                | _operation            { logMessage("operation"); }
-                | _braces
+_statement:     _content_word                   { logMessage("contentWord"); }          
+                | _operation                    { logMessage("operation"); }
                 ;
                 
 _content_word:  CONTENT _content_word
-                | CONTENT                 { logMessage("content"); logMessage(yytext); }                
+                | CONTENT                                                       { logMessage("content"); logMessage(yytext); }     
+                | CONTENT BRACE_OPEN BRACE_CLOSE _content_word
+                | CONTENT BRACE_OPEN _content_word BRACE_CLOSE _content_word
                 ;
 
-_braces:        BRACE_OPEN BRACE_CLOSE
-                | BRACE_OPEN _statement BRACE_CLOSE
+_braces:        BRACE_OPEN BRACE_CLOSE                  
+                | BRACE_OPEN _statement BRACE_CLOSE    
                 ;
                 
 _operation:     _while _statement
                 | _case
                 | _label
                 | _catch
-				| _if
+		| _if
                 ;
                 
 _while:         OP_WHILE                { logMessage(yytext); }
@@ -68,19 +69,19 @@ _condition:     OP_WHEN _statement OP_THEN _statement;
 
 _condition_else:     OP_ELSE _statement;  
 
-_catch:         OP_CATCH _statement OP_END OP_CATCH             				{ logMessage("catch"); }
+_catch:         OP_CATCH _statement OP_END OP_CATCH     { logMessage("catch"); }
                 ;
 
 
-_if:			_if_then        %prec PSEUDO_THEN								{ logMessage("if"); }
-				| _if_then OP_ELSE _stmt_block 									{ logMessage("if else"); }
-				;
+_if:    _if_then %prec PSEUDO_THEN                              { logMessage("if"); }
+	| _if_then OP_ELSE _stmt_block 				{ logMessage("if else"); }
+	;
 
-_if_then:		OP_IF _braces _stmt_block
-				;
+_if_then:       OP_IF _braces _stmt_block
+		;
 
-_stmt_block:	OP_BEGIN _statement_list OP_END									{ logMessage("block"); }
-				;
+_stmt_block:	OP_BEGIN _statement_list OP_END	        { logMessage("block"); }
+		;
 %%
 
 logYyText() {
