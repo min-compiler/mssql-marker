@@ -5,26 +5,23 @@ extern int zeile;
 %}
 
 LINE_COMMENT        [ ]*--.*
-
-KEYWORD_START       ([ ]*)|^
-KEYWORD_END         [ \n]
 NEWLINE    			[\n]
 
-LABEL               {KEYWORD_START}([0-9a-zA-Z_]+):{KEYWORD_END}
-CASE                {KEYWORD_START}(CASE|case){KEYWORD_END}
-WHEN                {KEYWORD_START}(WHEN|when){KEYWORD_END}
-THEN                {KEYWORD_START}(THEN|then){KEYWORD_END}
-ELSE                {KEYWORD_START}(ELSE|else){KEYWORD_END}
-END                 {KEYWORD_START}(END|end){KEYWORD_END}
-IF                  {KEYWORD_START}(IF|if){KEYWORD_END}
-BEGIN               {KEYWORD_START}(BEGIN|begin){KEYWORD_END}
-CATCH               {KEYWORD_START}(CATCH|catch){KEYWORD_END}
-WHILE               {KEYWORD_START}(WHILE|while){KEYWORD_END}
+LABEL               ([0-9a-zA-Z_]+):
+CASE                (CASE|case)
+WHEN                (WHEN|when)
+THEN                (THEN|then)
+ELSE                (ELSE|else)
+END                 (END|end)
+IF                  (IF|if)
+BEGIN               (BEGIN|begin)
+CATCH               (CATCH|catch)
+WHILE               (WHILE|while)
 
 BRACE_OPEN          [(]
 BRACE_CLOSE         [)]
 
-%x COMMENT KEYWORD_END
+%x COMMENT 
 %%
 
 {LINE_COMMENT}      { /* skip */ }
@@ -32,10 +29,6 @@ BRACE_CLOSE         [)]
 <COMMENT>(.)     { /* skip */ }
 <COMMENT>(\n)        { zeile++; }
 <COMMENT>"*/"       { BEGIN INITIAL; }
-
-"{LABEL}|{CASE}|{WHEN}|{THEN}|{ELSE}|{END}|{IF}|{BEGIN}|{CATCH}|{WHILE}" 			{ BEGIN KEYWORD_END; }
-<KEYWORD_END>[ ]+		{ BEGIN INITIAL; }
-<KEYWORD_END>[\n]		{ zeile++; BEGIN INITIAL; }
 
 {NEWLINE}    		{ zeile++; }
 {LABEL}             { return (OP_LABEL); }
@@ -52,7 +45,7 @@ BRACE_CLOSE         [)]
 {BRACE_CLOSE}       { return (BRACE_CLOSE); } 
 
 #[0-9a-zA-Z]+        { /*ignore*/ }
-.                   { return (CONTENT); }
+[^( |\n)]+           { return (CONTENT); }
 
 %%
 yywrap(){}
