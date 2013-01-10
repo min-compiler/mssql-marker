@@ -95,10 +95,16 @@ logMessage(const char* content) {
 }
 
 yyerror(){
-    fprintf(stderr,"Syntaxfehler! In Zeile: %d .\n", zeile);
+    fprintf(stderr,"Syntaxfehler! In Zeile: <%d>, Token: <%s> .\n", zeile, yytext);
 }
-main(){
+int  main(){
     // set me to 1 to get nice debug messages!!!
     yydebug = 0;
-    yyparse();
+    int fail = yyparse(); // returns a value of 0 if the input is valid to a given grammer
+
+    if(!fail)
+
+    	printf("<%d> Zeilen ohne Fehler überprüft !!! \n", zeile);
+
+    return 0;
 }
