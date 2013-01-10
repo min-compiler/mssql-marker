@@ -32,14 +32,6 @@ _statement_list: _statement_list _statement
 _statement:     _content_word           { logMessage("contentWord"); }
                 | _operation            { logMessage("operation"); }
                 | _braces
-                | _content_word _braces _content_word
-                | _operation _braces _operation
-                | _operation _braces _content_word
-                | _content_word _braces _operation      
-                | _operation _braces
-                | _content_word _braces
-                | _braces _content_word
-                | _braces _operation
                 ;
                 
 _content_word:  CONTENT _content_word
