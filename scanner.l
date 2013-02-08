@@ -1,11 +1,13 @@
 %{
 #include "parser.tab.h"
 #include <ctype.h>
+#include<string.h>
+
 extern int zeile;
 %}
 
 LINE_COMMENT        [ ]*--.*
-NEWLINE    			[\n]
+NEWLINE             [\n]
 
 LABEL               ([0-9a-zA-Z_]+):
 CASE                (CASE|case)
@@ -23,14 +25,13 @@ BRACE_CLOSE         [)]
 
 %x COMMENT 
 %%
-
 {LINE_COMMENT}      { /* skip */ }
 "/*"                { BEGIN COMMENT; }
-<COMMENT>(.)     { /* skip */ }
-<COMMENT>(\n)        { zeile++; }
+<COMMENT>(.)        { /* skip */ }
+<COMMENT>(\n)       { zeile++; }
 <COMMENT>"*/"       { BEGIN INITIAL; }
 
-{NEWLINE}    		{ zeile++; }
+{NEWLINE}           { zeile++; }
 {LABEL}             { return (OP_LABEL); }
 {CASE}              { return (OP_CASE); }                
 {WHEN}              { return (OP_WHEN); } 
@@ -44,8 +45,8 @@ BRACE_CLOSE         [)]
 {BRACE_OPEN}        { return (BRACE_OPEN); } 
 {BRACE_CLOSE}       { return (BRACE_CLOSE); } 
 
-#[0-9a-zA-Z]+        { /*ignore*/ }
-[^( |\n)]+           { return (CONTENT); }
+#[0-9a-zA-Z]+       { /*ignore*/ }
+[^( |\n|\t)]+       { yylval.strval = strdup(yytext); return (CONTENT); }
 
 %%
 yywrap(){}

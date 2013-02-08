@@ -1,12 +1,12 @@
-CASE 
-WHEN abc abc THEN abc
-WHEN abc THEN abc  
+CASE test
+WHEN abc def THEN stq
+WHEN ghj THEN xgw  
 END
 
 CASE inputexpression
     WHEN whenexpression THEN resultexpression
     WHEN whenexpression THEN resultexpression
-    ELSE elseresultexpression
+    ELSE bla
 END 
 
 CASE
